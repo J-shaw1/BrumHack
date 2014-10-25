@@ -7,6 +7,7 @@ public class Player {
 	
 	private String name;
 	private int chips;
+	//TODO add Hand object
 	
 	/**
 	 * Constructor for creating a player
