@@ -18,8 +18,11 @@ public class PokerRound {
 	}
 
 	public ArrayList<PlayerInterface> start(int sizeOfBBlind) {
+		int currentBet = 0;
 		pot = new Pot(players.size());
 		int x = 0;
+		int descision = 0;
+
 		// Assign Blind
 		if (roundNumber <= players.size()) {
 			players.get(roundNumber).setBlind(Blind.Small);
@@ -57,6 +60,19 @@ public class PokerRound {
 		}
 
 		// first round of betting
+		System.out.println("The current bet is " + currentBet + ".");
+		for (int i = 0; i < players.size(); i++) {
+			descision = players.get(i).getDecision(currentBet);
+			if (descision < 0) {
+				// fold
+			} else if (descision == 0 && currentBet == 0) {
+				// check
+			} else if (descision == sizeOfBBlind) {
+				// call
+			} else {
+				// raise
+			}
+		}
 
 		return players;
 	}// end of start()
