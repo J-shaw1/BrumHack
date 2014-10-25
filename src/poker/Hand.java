@@ -16,8 +16,8 @@ public class Hand {
 			throw new Exception("Too many cards in the hand");
 	}
 
-	public Card[] getHand() {
-		return (Card[]) cards.toArray();
+	public ArrayList<Card> getHand() {
+		return cards;
 	}
 
 	public String toString() {

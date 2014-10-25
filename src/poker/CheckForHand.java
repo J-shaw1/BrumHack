@@ -7,8 +7,8 @@ public class CheckForHand {
 
 	public static Combinations check(Hand h, ArrayList<Card> downCards){
 		
-		downCards.add(h.getHand()[0]);
-		downCards.add(h.getHand()[1]);
+		downCards.add(h.getHand().get(0));
+		downCards.add(h.getHand().get(1));
 		
 		Collections.sort(downCards);
 		
