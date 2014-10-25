@@ -17,11 +17,12 @@ public class PokerRound {
 		this.roundNumber = roundNumber;
 	}
 
-	public ArrayList<PlayerInterface> start(int sizeOfBBlind) {
+	public ArrayList<PlayerInterface> start(int sizeOfBBlind) throws Exception {
 		int currentBet = 0;
 		pot = new Pot(players.size());
 		int x = 0;
-		int descision = 0;
+		int decision = 0;
+		int bettingRoundNumber;
 
 		// Assign Blind
 		if (roundNumber <= players.size()) {
@@ -51,28 +52,63 @@ public class PokerRound {
 		for (int i = 0; i < players.size(); i++) {
 			System.out.println(players.get(i).getHand());
 		}
+		bettingRoundNumber = 1;
 		// small blind + big blind
 		for (int i = 0; i < MAX_AMOUNT_AI + 1; i++) {
 			if ((players.get(i)).getBlind() == Blind.Small) {
-				pot.bet(sizeOfBBlind / 2, roundNumber, i);
-				pot.bet(sizeOfBBlind, roundNumber, i + 1);
+
+				pot.bet(sizeOfBBlind / 2, bettingRoundNumber, i);
+				pot.bet(sizeOfBBlind, bettingRoundNumber, i + 1);
+				
+				//remove chips from players
+				players.get(iSB).decreaseChips(sizeOfBBlind / 2);
+				players.get(iSB + 1).decreaseChips(sizeOfBBlind / 2);
 			}
 		}
 
+		x = roundNumber % players.size();
+
 		// first round of betting
-		System.out.println("The current bet is " + currentBet + ".");
-		for (int i = 0; i < players.size(); i++) {
-			descision = players.get(i).getDecision(currentBet);
-			if (descision < 0) {
+		System.out.println("The current bet is " + currentBet
+				+ ".\nBig blind is " + sizeOfBBlind + ".");
+
+		int startingPerson = roundNumber + 1; // -1 for place in array +2 for SB BB
+		int currentPerson = startingPerson;
+		int count = 0;
+		int decisionAmount = sizeOfBBlind;
+		do {
+			decision = players.get(currentPerson).getDecision(decisionAmount);
+			if (decision < 0) {
 				// fold
-			} else if (descision == 0 && currentBet == 0) {
+				System.out.println(players.get(currentPerson).getName() + " folded.");
+			} else if (decision == 0 && currentBet == 0) {
 				// check
-			} else if (descision == sizeOfBBlind) {
+				System.out.println(players.get(currentPerson).getName() + " checked.");
+			} else if (decision == sizeOfBBlind) {
 				// call
+				currentBet += decision;
+				System.out.println(players.get(currentPerson).getName() + " called amount " + decision +".");
+				pot.bet(decision, bettingRoundNumber, currentPerson);
 			} else {
 				// raise
+				currentBet += decision;
+				System.out.println(players.get(currentPerson).getName() + " rose amount " + decision +".");
+				pot.bet(decision, bettingRoundNumber, currentPerson);
+				// call new raised val
+				decisionAmount = decision;
+				
 			}
-		}
+			
+			currentPerson++;
+			if (currentPerson == players.size()){
+				currentPerson = 0;
+			}
+			count++;
+		} while (count != players.size());
+		currentBet = currentBet + sizeOfBBlind + (sizeOfBBlind/2);
+		
+		
+		System.out.println("The current pot is " + currentBet);
 
 		return players;
 	}// end of start()

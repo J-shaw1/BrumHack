@@ -2,7 +2,7 @@ package poker;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		System.out.print("What is your name? ");
 		String userName = Input.readString();

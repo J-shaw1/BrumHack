@@ -8,4 +8,5 @@ public interface PlayerInterface {
 	public Blind getBlind();
 	public Hand getHand();
 	public int getDecision(int currentBet);
+	public String getName();
 }
