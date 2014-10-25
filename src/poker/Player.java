@@ -38,4 +38,9 @@ public class Player {
 		chips = c;
 	}
 	
+	@Override
+	public String toString() {
+		return "Player name: " + name + " Amount of chips: " + chips;
+	}
+	
 }
