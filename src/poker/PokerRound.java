@@ -45,8 +45,8 @@ public class PokerRound {
 			}
 		}
 
-		for (int i = 0; i <= players.size(); i++) {
-			System.out.println(players.get(0).getHand());
+		for (int i = 0; i < players.size(); i++) {
+			System.out.println(players.get(i).getHand());
 		}
 		// small blind + big blind
 		for (int i = 0; i < MAX_AMOUNT_AI + 1; i++) {
