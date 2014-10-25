@@ -1,18 +1,21 @@
 package poker;
 
+import java.util.ArrayList;
+
 public class Hand {
 	
-	private Card c1;
-	private Card c2;
+	private ArrayList<Card> cards;
 	
-	public Hand(Card c1, Card c2){
-		this.c1 = c1;
-		this.c2 = c2;
+	public Hand(){
+	}
+	
+	public void addCard(Card c) throws Exception{
+		cards.add(c);
+		if(cards.size() > 2) throw new Exception("Too many cards in the hand") ;
 	}
 	
 	public Card[] getHand(){
-		Card[] c = {c1,c2};
-		return c;
+		return (Card[]) cards.toArray();
 	}
 	
 }
