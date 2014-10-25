@@ -7,17 +7,17 @@ public class PokerRound {
 	private static final int LOOP_TWO_TIMES = 2;
 	private static final int MAX_AMOUNT_AI = 4;
 
-	private ArrayList<Player> players;
+	private ArrayList<PlayerInterface> players;
 	private Deck deck = new Deck();
 	private int roundNumber;
 	private Pot pot;
 
-	public PokerRound(ArrayList<Player> players, int roundNumber) {
-		this.players = players;
+	public PokerRound(ArrayList<PlayerInterface> players2, int roundNumber) {
+		this.players = players2;
 		this.roundNumber = roundNumber;
 	}
 
-	public ArrayList<Player> start(int sizeOfBBlind) {
+	public ArrayList<PlayerInterface> start(int sizeOfBBlind) {
 		pot = new Pot(players.size());
 		int x = 0;
 		// Assign Blind
@@ -45,10 +45,9 @@ public class PokerRound {
 			}
 		}
 
-		for (int i = 0; i < players.size(); i++) {
-			System.out.println(players.get(i).getHand());
+		for (int i = 0; i <= players.size(); i++) {
+			System.out.println(players.get(0).getHand());
 		}
-
 		// small blind + big blind
 		for (int i = 0; i < MAX_AMOUNT_AI + 1; i++) {
 			if ((players.get(i)).getBlind() == Blind.Small) {
@@ -58,9 +57,7 @@ public class PokerRound {
 		}
 
 		// first round of betting
-		
-		
-		
+
 		return players;
 	}// end of start()
 

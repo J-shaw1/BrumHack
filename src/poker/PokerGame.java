@@ -16,12 +16,12 @@ public class PokerGame {
 	public static void start() {
 		int roundNumber = 1;
 		int sizeOfBBlind = 2; 
-		ArrayList<Player> players_hold = new ArrayList<Player>();
+		ArrayList<PlayerInterface> players_hold = new ArrayList<PlayerInterface>();
 
 		// Create AI
-		ArrayList<Player> players = new ArrayList<Player>();
+		ArrayList<PlayerInterface> players = new ArrayList<PlayerInterface>();
 		for (int i = 0; i < MAX_AMOUNT_AI; i++) {
-			players.add(new Player("ai" + i, START_CHIPS_AI));
+			players.add(new AIPlayer("ai" + i, START_CHIPS_AI));
 		}
 		// user is last player in list
 		players.add(player1);
