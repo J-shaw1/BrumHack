@@ -9,8 +9,7 @@ public class AIPlayer extends Player implements PlayerInterface {
 	}
 
 	public int getDecision(int currentBet) {
-		
-		return 0;
+		card c1 = this.getHand().=
 	}
 
 	@Override

@@ -22,6 +22,7 @@ public class Player implements PlayerInterface{
 		this.setChips(startingAmount);
 		this.name = name;
 		this.blind = Blind.None;
+		this.hand = new Hand();
 	}
 
 	public void addCardToHand(Card c) {
@@ -79,6 +80,7 @@ public class Player implements PlayerInterface{
 
 	@Override
 	public int getDecision(int currentBet) {
+		System.out.println("How much do you want to bet: ");
 		return Input.readInt();
 	}
 
