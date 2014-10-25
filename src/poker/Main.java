@@ -7,9 +7,9 @@ public class Main {
 		System.out.print("What is your name? ");
 		String userName = Input.readString();
 		Player player1 = new Player(userName, 100);
-		Deck deck1 = new Deck();
 		
-		PokerGame poker = new PokerGame(player1, deck1);
+		PokerGame poker = new PokerGame(player1);
+		poker.start();
 	}
 
 }
