@@ -46,7 +46,7 @@ public class AIPlayer extends Player implements PlayerInterface {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(14 % 12);
+		System.out.println(5 / 2);
 	}
 	
 }
