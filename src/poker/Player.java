@@ -8,6 +8,7 @@ public class Player {
 	private String name;
 	private int chips;
 	private Hand hand;
+	private Blind blind;
 
 	/**
 	 * Constructor for creating a player
@@ -18,8 +19,9 @@ public class Player {
 	 *            Starting amount of chips
 	 */
 	public Player(String name, int startingAmount) {
-		this.chips = startingAmount;
+		this.setChips(startingAmount);
 		this.name = name;
+		this.blind = Blind.None;
 	}
 
 	public void addCardToHand(Card c) {
@@ -31,6 +33,14 @@ public class Player {
 		}
 	}
 
+	public Blind getBlind() {
+		return blind;
+	}
+
+	public void setBlind(Blind blind) {
+		this.blind = blind;
+	}
+	
 	/**
 	 * Increases a players chips
 	 * 
