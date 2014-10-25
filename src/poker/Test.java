@@ -9,16 +9,16 @@ public class Test {
 		
 		//c.add(new Card(12,Suit.Clubs));
 		//c.add(new Card(2,Suit.Clubs));
-		c.add(new Card(4,Suit.Hearts));
-		c.add(new Card(4,Suit.Spades));
-		c.add(new Card(7,Suit.Diamonds));
-		c.add(new Card(2,Suit.Diamonds));
-		c.add(new Card(13,Suit.Clubs));
+		c.add(new Card(3,Suit.Clubs));
+		c.add(new Card(10,Suit.Spades));
+		c.add(new Card(7,Suit.Clubs));
+		c.add(new Card(8,Suit.Clubs));
+		c.add(new Card(8,Suit.Clubs));
 		
 		Hand h = new Hand();
 		try {
 			h.addCard(new Card(2,Suit.Clubs));
-			h.addCard(new Card(12,Suit.Clubs));
+			h.addCard(new Card(12,Suit.Diamonds));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
