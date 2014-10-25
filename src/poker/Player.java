@@ -1,21 +1,37 @@
 package poker;
 
+/**
+ * Represents a player
+ */
 public class Player {
 	
 	private String name;
 	private int chips;
 	
-	public Player(String name, int startingAmmount){
-		this.chips = startingAmmount;
+	/**
+	 * Constructor for creating a player
+	 * @param name Name of the player
+	 * @param startingAmount Starting amount of chips
+	 */
+	public Player(String name, int startingAmount){
+		this.chips = startingAmount;
 		this.name = name;
 	}
 	
-	public void increaseChips(int ammount){
-		chips+=ammount;
+	/**
+	 * Increases a players chips
+	 * @param amount Amount to increase by
+	 */
+	public void increaseChips(int amount){
+		chips+=amount;
 	}
 	
-	public void decreaseChips(int ammount){
-		chips-=ammount;
+	/**
+	 * Decreases a players chips
+	 * @param amount Amount to decrease by
+	 */
+	public void decreaseChips(int amount){
+		chips-=amount;
 	}
 	
 	private void setChips(int c){
