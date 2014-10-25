@@ -79,7 +79,7 @@ public class Player implements PlayerInterface{
 
 	@Override
 	public int getDecision(int currentBet) {
-		return 0;
+		return Input.readInt();
 	}
 
 }
