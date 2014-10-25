@@ -15,8 +15,7 @@ public class PokerGame {
 
 	public static void start() {
 		int roundNumber = 1;
-		int aopbr = 0; // amount of players before round
-		int aobar = 0; // amount of players after round
+		int sizeOfBBlind = 2; 
 		ArrayList<Player> players_hold = new ArrayList<Player>();
 
 		// Create AI
@@ -29,9 +28,8 @@ public class PokerGame {
 
 		// Assign S/B blind
 		do {
-			aopbr = players.size();
 			PokerRound round = new PokerRound(players, roundNumber);
-			players_hold = round.start();
+			players_hold = round.start(sizeOfBBlind);
 			if (players.size() > players_hold.size()){
 				//Player knocked out
 			} else {
