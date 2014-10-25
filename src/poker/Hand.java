@@ -7,7 +7,7 @@ public class Hand {
 	private ArrayList<Card> cards;
 
 	public Hand(){
-		cards = new ArrayList<>();
+		cards = new ArrayList<Card>();
 	}
 
 	public void addCard(Card c) throws Exception {
@@ -21,7 +21,7 @@ public class Hand {
 	}
 
 	public String toString() {
-		return "Card 1: " + cards.get(0).toString() + " Card 2:"
+		return "Card 1: " + cards.get(0).toString() + " & Card 2:"
 				+ cards.get(1).toString();
 	}
 
