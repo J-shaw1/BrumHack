@@ -6,4 +6,6 @@ public interface PlayerInterface {
 	public void addCardToHand(Card c);
 	public void setBlind(Blind blind);
 	public Blind getBlind();
+	public Hand getHand();
+	public int getDecision(int currentBet);
 }

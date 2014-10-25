@@ -72,4 +72,14 @@ public class Player implements PlayerInterface{
 		return "Player name: " + name + " Amount of chips: " + chips;
 	}
 
+	@Override
+	public Hand getHand() {
+		return hand;
+	}
+
+	@Override
+	public int getDecision(int currentBet) {
+		return 0;
+	}
+
 }
