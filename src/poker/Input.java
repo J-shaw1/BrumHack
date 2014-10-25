@@ -9,6 +9,18 @@ public class Input {
 			new InputStreamReader(System.in));
 	private static String input;
 	
+	public static int readInt() {
+		int retVal = Integer.MAX_VALUE;
+		try {
+			input = brd.readLine();
+			retVal = Integer.parseInt(input.trim());
+		} catch (Exception e) {
+			System.out.println("Exception: Could not parse \"" + input
+					+ "\" as an int");
+		}
+		return retVal;
+	}
+	
 	public static String readString() {
 		String retStr = null;
 		try {
