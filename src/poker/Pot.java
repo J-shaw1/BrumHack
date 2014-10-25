@@ -35,6 +35,11 @@ public class Pot {
 		return pot[round][numPlayers];
 	}
 
+	/**
+	 * Gets the total of the pot
+	 * 
+	 * @return The pot total
+	 */
 	public int returnPotTotal() {
 		int total = 0;
 		for (int i = 0; i < pot.length; i++) {

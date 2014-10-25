@@ -3,7 +3,7 @@ package poker;
 /**
  * Represents a player
  */
-public class Player {
+public class Player implements PlayerInterface{
 
 	private String name;
 	private int chips;
@@ -56,9 +56,11 @@ public class Player {
 	 * 
 	 * @param amount
 	 *            Amount to decrease by
+	 * @throws Exception Throw if chips amount is below zero
 	 */
-	public void decreaseChips(int amount) {
+	public void decreaseChips(int amount) throws Exception {
 		chips -= amount;
+		if(chips < 0) throw new Exception("Chips amount is below zero");
 	}
 
 	private void setChips(int c) {
