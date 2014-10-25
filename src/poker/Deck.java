@@ -7,6 +7,9 @@ public class Deck {
 
 	private ArrayList<Card> deck;
 
+	/**
+	 * creates the deck and shuffles it
+	 */
 	public Deck() {
 		deck = new ArrayList<Card>();
 
@@ -37,6 +40,9 @@ public class Deck {
 		return c;
 	}
 
+	/**
+	 * Shuffles the deck
+	 */
 	public void shuffle() {
 		Collections.shuffle(deck);
 	}
