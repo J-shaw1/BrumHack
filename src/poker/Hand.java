@@ -18,4 +18,8 @@ public class Hand {
 		return (Card[]) cards.toArray();
 	}
 	
+	public String toString() {
+		return "Card 1: " + cards.get(0).toString() + " Card 2:" + cards.get(1).toString();
+	}
+	
 }
