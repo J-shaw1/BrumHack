@@ -9,13 +9,12 @@ public class AIPlayer extends Player implements PlayerInterface {
 	}
 
 	public int getDecision(int currentBet) {
-		card c1 = this.getHand().=
+		return currentBet;
 	}
 
 	@Override
 	public void increaseChips(int amount) {
 		super.increaseChips(amount);
-
 	}
 
 	@Override
@@ -42,10 +41,6 @@ public class AIPlayer extends Player implements PlayerInterface {
 	@Override
 	public Hand getHand() {
 		return super.getHand();
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(5 / 2);
 	}
 	
 }
