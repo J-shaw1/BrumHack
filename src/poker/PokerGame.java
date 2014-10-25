@@ -13,7 +13,7 @@ public class PokerGame {
 		this.player1 = player1;
 	}
 
-	public static void start() {
+	public static void start() throws Exception {
 		int roundNumber = 1;
 		int sizeOfBBlind = 2; 
 		ArrayList<PlayerInterface> players_hold = new ArrayList<PlayerInterface>();

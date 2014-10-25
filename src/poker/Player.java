@@ -80,8 +80,13 @@ public class Player implements PlayerInterface{
 
 	@Override
 	public int getDecision(int currentBet) {
-		System.out.println("How much do you want to bet: ");
+		System.out.print("How much do you want to bet: ");
 		return Input.readInt();
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 
 }
