@@ -5,12 +5,18 @@ import java.util.Collections;
 
 public class CheckForHand {
 
-	public static Combinations check(Hand h, ArrayList<Card> downCards) {
-
-		downCards.add(h.getHand().get(0));
-		downCards.add(h.getHand().get(1));
-
+	ArrayList<Card> downCards = new ArrayList<Card>();
+	
+	
+	public CheckForHand(Hand h, ArrayList<Card> downCards){
+		this.downCards.add(h.getHand().get(0));
+		this.downCards.add(h.getHand().get(1));
+		this.downCards.addAll(downCards);
 		Collections.sort(downCards);
+	}
+	
+	public Combinations check() {
+
 		System.out.println(downCards);
 
 		Combinations al = Combinations.HighCard;
@@ -109,7 +115,7 @@ public class CheckForHand {
 			return ah;
 	}
 
-	private static boolean checkRoyalFlush(ArrayList<Card> cards) {
+	private boolean checkRoyalFlush(ArrayList<Card> cards) {
 		int count[] = new int[15];
 
 		int spades = 0;
@@ -121,12 +127,16 @@ public class CheckForHand {
 			switch (c.getSuit()) {
 			case Spades:
 				spades++;
+				break;
 			case Clubs:
 				clubs++;
+				break;
 			case Hearts:
 				hearts++;
+				break;
 			case Diamonds:
 				diamonds++;
+				break;
 			}
 		}
 
@@ -141,7 +151,7 @@ public class CheckForHand {
 		return true && (spades >= 5 || clubs >= 5 || hearts >= 5 || diamonds >= 5);
 	}
 
-	private static boolean checkStrightFlush(ArrayList<Card> cards) {
+	private boolean checkStrightFlush(ArrayList<Card> cards) {
 
 		int cardCount = 0;
 		for (int i = 0; i < 2; i++) {
@@ -157,7 +167,7 @@ public class CheckForHand {
 		return false;
 	}
 
-	private static boolean checkFourOfAKind(ArrayList<Card> cards) {
+	private boolean checkFourOfAKind(ArrayList<Card> cards) {
 		int count[] = new int[15];
 
 		for (Card c : cards) {
@@ -168,13 +178,13 @@ public class CheckForHand {
 		return false;
 	}
 
-	private static boolean checkFullHouse(ArrayList<Card> cards) {
+	private boolean checkFullHouse(ArrayList<Card> cards) {
 		ArrayList<Card> cards2 = new ArrayList<Card>();
 		cards2.addAll(cards);
 		return checkThreeOfAKind(cards) && checkPair(removeThreeOfAKind(cards2));
 	}
 
-	private static boolean checkFlush(ArrayList<Card> cards) {
+	private boolean checkFlush(ArrayList<Card> cards) {
 
 		int spades = 0;
 		int clubs = 0;
@@ -197,7 +207,7 @@ public class CheckForHand {
 		return (spades == 5 || clubs == 5 || hearts == 5 || diamonds == 5);
 	}
 
-	private static boolean checkStright(ArrayList<Card> cards) {
+	private boolean checkStright(ArrayList<Card> cards) {
 		int cardCount = 0;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -212,7 +222,7 @@ public class CheckForHand {
 		return false;
 	}
 
-	private static boolean checkThreeOfAKind(ArrayList<Card> cards) {
+	private boolean checkThreeOfAKind(ArrayList<Card> cards) {
 		int count[] = new int[15];
 
 		for (Card c : cards) {
@@ -224,13 +234,13 @@ public class CheckForHand {
 
 	}
 
-	private static boolean checkTwoPair(ArrayList<Card> cards) {
+	private boolean checkTwoPair(ArrayList<Card> cards) {
 		ArrayList<Card> cards2 = new ArrayList<Card>();
 		cards2.addAll(cards);
 		return checkPair(cards) && checkPair(removePair(cards2));
 	}
 
-	private static boolean checkPair(ArrayList<Card> cards) {
+	private boolean checkPair(ArrayList<Card> cards) {
 		int count[] = new int[15];
 
 		for (Card c : cards) {
@@ -241,7 +251,7 @@ public class CheckForHand {
 		return false;
 	}
 
-	private static ArrayList<Card> removePair(ArrayList<Card> cards) {
+	private ArrayList<Card> removePair(ArrayList<Card> cards) {
 		for (int i = 0; i < cards.size() - 1; i++) {
 			if (cards.get(i).getNumber() == cards.get(i + 1).getNumber()) {
 				cards.remove(i);
@@ -253,7 +263,7 @@ public class CheckForHand {
 		return null;
 	}
 
-	private static ArrayList<Card> removeThreeOfAKind(ArrayList<Card> cards) {
+	private ArrayList<Card> removeThreeOfAKind(ArrayList<Card> cards) {
 		int cardCount = 0;
 		int threeIndex = 0;
 
