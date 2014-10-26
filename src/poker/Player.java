@@ -7,6 +7,10 @@ public class Player implements PlayerInterface{
 
 	private String name;
 	private int chips;
+	public int getChips() {
+		return chips;
+	}
+
 	private Hand hand;
 	private Blind blind;
 

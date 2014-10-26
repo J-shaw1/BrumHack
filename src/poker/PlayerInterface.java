@@ -9,4 +9,5 @@ public interface PlayerInterface {
 	public Hand getHand();
 	public int getDecision(int currentBet);
 	public String getName();
+	public int getChips();
 }

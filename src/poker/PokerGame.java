@@ -27,8 +27,9 @@ public class PokerGame {
 		players.add(player1);
 
 		// Assign S/B blind
-		//do {
-			PokerRound round = new PokerRound(players, roundNumber);
+		PokerRound round;
+		do {
+			round = new PokerRound(players, roundNumber);
 			players_hold = round.start(sizeOfBBlind);
 			if (players.size() > players_hold.size()){
 				//Player knocked out
@@ -36,7 +37,7 @@ public class PokerGame {
 				//No player knocked out
 			}
 			players = players_hold;
-		//} while (players.size() != 0);
+		} while (players.size() != 0);
 
 	}
 

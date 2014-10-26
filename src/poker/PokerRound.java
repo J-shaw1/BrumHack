@@ -101,6 +101,12 @@ public class PokerRound {
 		players.get(player).increaseChips(pot.returnPotTotal());
 		System.out.println("The winner is " + players.get(player).getName() + ".");
 		
+		for(PlayerInterface p: players){
+			if(p.getChips() < 0){
+				players.remove(p);
+			}
+		}
+		
 		return players;
 	}// end of start()
 
