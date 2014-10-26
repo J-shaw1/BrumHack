@@ -11,6 +11,7 @@ public class PokerRound {
 	private Deck deck = new Deck();
 	private int roundNumber;
 	private Pot pot;
+	private int decision;
 
 	public PokerRound(ArrayList<PlayerInterface> players2, int roundNumber) {
 		this.players = players2;
@@ -18,29 +19,11 @@ public class PokerRound {
 	}
 
 	public ArrayList<PlayerInterface> start(int sizeOfBBlind) throws Exception {
-		int currentBet = 0;
+		int currentHighBet = 0;
 		pot = new Pot(players.size());
 		int x = 0;
 		int decision = 0;
 		int bettingRoundNumber;
-
-		// Assign Blind
-		if (roundNumber <= players.size()) {
-			players.get(roundNumber).setBlind(Blind.Small);
-			if (roundNumber + 1 <= players.size()) {
-				players.get(roundNumber + 1).setBlind(Blind.Big);
-			} else {
-				x = roundNumber % players.size();
-				players.get(x).setBlind(Blind.Big);
-			}
-		} else {
-			x = roundNumber % players.size();
-			players.get(x).setBlind(Blind.Small);
-			players.get(x + 1).setBlind(Blind.Big);
-		}
-
-		// set some vars to make it easier later
-		int iSB = roundNumber % players.size();
 
 		// Give 2 cards each
 		for (int j = 0; j < LOOP_TWO_TIMES; j++) {
@@ -53,64 +36,113 @@ public class PokerRound {
 			System.out.println(players.get(i).getHand());
 		}
 		bettingRoundNumber = 1;
-		// small blind + big blind
-		for (int i = 0; i < MAX_AMOUNT_AI + 1; i++) {
-			if ((players.get(i)).getBlind() == Blind.Small) {
 
-				pot.bet(sizeOfBBlind / 2, bettingRoundNumber, i);
-				pot.bet(sizeOfBBlind, bettingRoundNumber, i + 1);
-				
-				//remove chips from players
-				players.get(iSB).decreaseChips(sizeOfBBlind / 2);
-				players.get(iSB + 1).decreaseChips(sizeOfBBlind / 2);
-			}
-		}
-
-		x = roundNumber % players.size();
+		players.get(0).setBlind(Blind.Small);
+		players.get(1).setBlind(Blind.Big);
+		pot.bet(1, bettingRoundNumber, 0);
+		pot.bet(2, bettingRoundNumber, 1);
+		players.get(0).decreaseChips(1);
+		players.get(1).decreaseChips(2);
+		currentHighBet = sizeOfBBlind;
+		System.out.println(pot.returnPotTotal());
 
 		// first round of betting
-		System.out.println("The current bet is " + currentBet
+		System.out.println("The current bet is " + currentHighBet
 				+ ".\nBig blind is " + sizeOfBBlind + ".");
 
-		int startingPerson = roundNumber + 1; // -1 for place in array +2 for SB BB
-		int currentPerson = startingPerson;
-		int count = 0;
-		int decisionAmount = sizeOfBBlind;
-		do {
-			decision = players.get(currentPerson).getDecision(decisionAmount);
-			if (decision < 0) {
-				// fold
-				System.out.println(players.get(currentPerson).getName() + " folded.");
-			} else if (decision == 0 && currentBet == 0) {
-				// check
-				System.out.println(players.get(currentPerson).getName() + " checked.");
-			} else if (decision == sizeOfBBlind) {
-				// call
-				currentBet += decision;
-				System.out.println(players.get(currentPerson).getName() + " called amount " + decision +".");
-				pot.bet(decision, bettingRoundNumber, currentPerson);
-			} else {
-				// raise
-				currentBet += decision;
-				System.out.println(players.get(currentPerson).getName() + " rose amount " + decision +".");
-				pot.bet(decision, bettingRoundNumber, currentPerson);
-				// call new raised val
-				decisionAmount = decision;
-				
-			}
-			
-			currentPerson++;
-			if (currentPerson == players.size()){
-				currentPerson = 0;
-			}
-			count++;
-		} while (count != players.size());
-		currentBet = currentBet + sizeOfBBlind + (sizeOfBBlind/2);
-		
-		
-		System.out.println("The current pot is " + currentBet);
+		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		System.out.println("Total in pot: " + pot.returnPotTotal());
+		bettingRoundNumber++;
+		// flop
+		System.out.println("FLop:");
+		ArrayList<Card> flop = flop(new ArrayList<Card>());
+		for (Card c : flop) {
+			System.out.println(c);
+		}
+		// Betting 2
+		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		System.out.println("Total in pot: " + pot.returnPotTotal());
+		bettingRoundNumber++;
+		// flop2
+		flop = flop(flop);
+		for (Card c : flop) {
+			System.out.println(c);
+		}
+		// Betting 3
+		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		System.out.println("Total in pot: " + pot.returnPotTotal());
+		bettingRoundNumber++;
+		// Last flop
+		flop = flop(flop);
+		for (Card c : flop) {
+			System.out.println(c);
+		}
+		// Last bet
+		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		System.out.println("Total in pot: " + pot.returnPotTotal());
 
 		return players;
 	}// end of start()
+
+	private void bettingLol(int sizeOfBBlind, int currentHighBet,
+			int bettingRoundNumber) throws Exception {
+		int decision;
+		int startingPerson = roundNumber + 1; // -1 for place in array +2 for SB
+												// BB
+		int currentPerson = startingPerson;
+		int count = 0;
+		int decisionAmount = sizeOfBBlind;
+
+		do {
+
+			if (players.get(currentPerson).getBlind().equals(Blind.None)) {
+				decision = players.get(currentPerson).getDecision(
+						decisionAmount);
+			} else if (players.get(currentPerson).getBlind()
+					.equals(Blind.Small)) {
+				decision = players.get(currentPerson).getDecision(
+						currentHighBet);
+			} else {
+				decision = players.get(currentPerson).getDecision(
+						currentHighBet);
+			}
+
+			if (decision < 0) {
+				// fold
+			} else if (decision == 0) {
+				// check
+			} else if (decision > 0) {
+				if (decision == currentHighBet) {
+					// call
+					pot.bet(decision, bettingRoundNumber, currentPerson);
+					players.get(currentPerson).decreaseChips(decision);
+					System.out.println("Player: "
+							+ players.get(currentPerson).getName()
+							+ " called with: " + decision);
+				} else {
+					// raise
+					pot.bet(decision, bettingRoundNumber, currentPerson);
+					players.get(currentPerson).decreaseChips(decision);
+					System.out.println("Player: "
+							+ players.get(currentPerson).getName()
+							+ " raised with: " + decision);
+				}
+			}
+
+			currentPerson++;
+			if (currentPerson == players.size()) {
+				currentPerson = 0;
+			}
+			count++;
+			if (decision > currentHighBet) {
+				currentHighBet = decision;
+			}
+		} while (count != players.size());
+	}
+
+	private ArrayList<Card> flop(ArrayList<Card> flop) {
+		flop.add(deck.getCard());
+		return flop;
+	}
 
 }
