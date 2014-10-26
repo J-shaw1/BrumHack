@@ -12,7 +12,7 @@ public class CheckForHand {
 		this.downCards.add(h.getHand().get(0));
 		this.downCards.add(h.getHand().get(1));
 		this.downCards.addAll(downCards);
-		Collections.sort(downCards);
+		Collections.sort(this.downCards);
 	}
 	
 	public Combinations check() {
@@ -195,12 +195,16 @@ public class CheckForHand {
 			switch (c.getSuit()) {
 			case Spades:
 				spades++;
+				break;
 			case Clubs:
 				clubs++;
+				break;
 			case Hearts:
 				hearts++;
+				break;
 			case Diamonds:
 				diamonds++;
+				break;
 			}
 		}
 

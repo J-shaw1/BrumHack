@@ -85,13 +85,21 @@ public class PokerRound {
 				bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 
-		
-		
+		Combinations winning = Combinations.HighCard;
+		int player = 0;
 		for (int i = 0; i < players.size(); i++) {
-			Combinations[] combslel = new Combinations[players.size()];
-			combslel[i] = CheckForHand.check(players.get(i).getHand(), flop);
-			System.out.println(combslel[i]);
+			Combinations[] combs = new Combinations[players.size()];
+			CheckForHand chk = new CheckForHand(players.get(i).getHand(), flop);
+			combs[i] = chk.check();
+			System.out.println(combs[i]);
+			if (winning.getValue() < combs[i].getValue()){
+				player = i;
+				winning = combs[i];
+			}
 		}
+		
+		players.get(player).increaseChips(pot.returnPotTotal());
+		System.out.println("The winner is " + players.get(player).getName() + ".");
 		
 		return players;
 	}// end of start()
@@ -105,12 +113,12 @@ public class PokerRound {
 		int currentPerson = startingPerson;
 		int count = 0;
 		do {
-			if (bettingRoundNumber == 1) {
-				decision = players.get(currentPerson).getDecision(2);
-			} else {
+			//if (bettingRoundNumber == 1) {
+				//decision = players.get(currentPerson).getDecision(2);
+			//} else {
 				decision = players.get(currentPerson).getDecision(
 						currentHighBet);
-			}
+			//}
 
 			if (decision < 0) {
 				// fold

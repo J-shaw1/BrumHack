@@ -26,7 +26,7 @@ public class Test {
 			e.printStackTrace();
 		}
 		
-		System.out.println(CheckForHand.check(h, c));
+		//System.out.println(CheckForHand.check(h, c));
 		
 	}
 }
