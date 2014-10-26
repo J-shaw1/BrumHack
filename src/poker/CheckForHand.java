@@ -6,15 +6,14 @@ import java.util.Collections;
 public class CheckForHand {
 
 	ArrayList<Card> downCards = new ArrayList<Card>();
-	
-	
-	public CheckForHand(Hand h, ArrayList<Card> downCards){
+
+	public CheckForHand(Hand h, ArrayList<Card> downCards) {
 		this.downCards.add(h.getHand().get(0));
 		this.downCards.add(h.getHand().get(1));
 		this.downCards.addAll(downCards);
 		Collections.sort(this.downCards);
 	}
-	
+
 	public Combinations check() {
 
 		System.out.println(downCards);
@@ -144,7 +143,7 @@ public class CheckForHand {
 			count[c.getNumber()]++;
 		}
 
-		for (int i = 10; i < count.length; i++) {
+		for (int i = 0; i < count.length; i++) {
 			if (count[i] < 1)
 				return false;
 		}
@@ -153,19 +152,63 @@ public class CheckForHand {
 
 	private boolean checkStrightFlush(ArrayList<Card> cards) {
 
-		int cardCount = 0;
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 5; j++) {
-				if ((cards.get(i + j).getSuit() == cards.get(i + j + 1).getSuit()) && (cards.get(i + j).getNumber() == cards.get(i + j + 1).getNumber() - 1))
-					cardCount++;
-			}
+		int count[] = new int[15];
 
-			if (cardCount == 4)
-				return true;
-			cardCount = 0;
+		int spades = 0;
+		int clubs = 0;
+		int hearts = 0;
+		int diamonds = 0;
+
+		for (Card c : cards) {
+			switch (c.getSuit()) {
+			case Spades:
+				spades++;
+				break;
+			case Clubs:
+				clubs++;
+				break;
+			case Hearts:
+				hearts++;
+				break;
+			case Diamonds:
+				diamonds++;
+				break;
+			}
+		}
+
+		for (Card c : cards) {
+			count[c.getNumber()]++;
+		}
+		int rowCount = 0;
+		for (int i = 0; i < 10; i++) {
+
+			for (int j = 1; j < 5; j++) {
+				if (count[i + j] >= 1) {
+					rowCount++;
+					if (rowCount == 4)
+						return true && (spades >= 5 || clubs >= 5 || hearts >= 5 || diamonds >= 5);
+				} else
+					break;
+			}
+			rowCount = 0;
 		}
 		return false;
 	}
+
+	//
+	// int cardCount = 0;
+	// for (int i = 0; i < 2; i++) {
+	// for (int j = 0; j < 5; j++) {
+	// if ((cards.get(i + j).getSuit() == cards.get(i + j + 1).getSuit()) &&
+	// (cards.get(i + j).getNumber() == cards.get(i + j + 1).getNumber() - 1))
+	// cardCount++;
+	// }
+	//
+	// if (cardCount == 4)
+	// return true;
+	// cardCount = 0;
+	// }
+	// return false;
 
 	private boolean checkFourOfAKind(ArrayList<Card> cards) {
 		int count[] = new int[15];
@@ -212,17 +255,25 @@ public class CheckForHand {
 	}
 
 	private boolean checkStright(ArrayList<Card> cards) {
-		int cardCount = 0;
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 5; j++) {
-				if (cards.get(i + j).getNumber() == cards.get(i + j + 1).getNumber() - 1)
-					cardCount++;
-			}
+		int count[] = new int[15];
+		int rowCount = 0;
 
-			if (cardCount == 4)
-				return true;
-			cardCount = 0;
+		for (Card c : cards) {
+			count[c.getNumber()]++;
 		}
+
+		for (int i = 0; i < 10; i++) {
+			for (int j = 1; j < 5; j++) {
+				if (count[i + j] >= 1) {
+					rowCount++;
+					if (rowCount == 4)
+						return true;
+				} else
+					break;
+			}
+			rowCount = 0;
+		}
+
 		return false;
 	}
 
