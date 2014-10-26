@@ -13,42 +13,141 @@ public class CheckForHand {
 		Collections.sort(downCards);
 		System.out.println(downCards);
 
-		if (checkRoyalFlush(downCards))
-			return Combinations.RoyalFlush;
-		if (checkStrightFlush(downCards))
-			return Combinations.StrightFlush;
-		if (checkFourOfAKind(downCards))
-			return Combinations.FourOfAKind;
-		if (checkFullHouse(downCards))
-			return Combinations.FullHouse;
-		if (checkFlush(downCards))
-			return Combinations.Flush;
-		if (checkStright(downCards))
-			return Combinations.Stright;
-		if (checkThreeOfAKind(downCards))
-			return Combinations.ThreeOfAKind;
-		if (checkTwoPair(downCards))
-			return Combinations.TwoPair;
-		if (checkPair(downCards))
-			return Combinations.Pair;
+		Combinations al = Combinations.HighCard;
+		Combinations ah = Combinations.HighCard;
 
-		return Combinations.HighCard;
+		while (true) {
+			if (checkStrightFlush(downCards)) {
+				al = Combinations.StrightFlush;
+				break;
+			}
+			if (checkFourOfAKind(downCards)) {
+				al = Combinations.FourOfAKind;
+				break;
+			}
+			if (checkFullHouse(downCards)) {
+				al = Combinations.FullHouse;
+				break;
+			}
+			if (checkFlush(downCards)) {
+				al = Combinations.Flush;
+				break;
+			}
+			if (checkStright(downCards)) {
+				al = Combinations.Stright;
+				break;
+			}
+			if (checkThreeOfAKind(downCards)) {
+				al = Combinations.ThreeOfAKind;
+				break;
+			}
+			if (checkTwoPair(downCards)) {
+				al = Combinations.TwoPair;
+				break;
+			}
+			if (checkPair(downCards)) {
+				al = Combinations.Pair;
+				break;
+			}
+			al = Combinations.HighCard;
+			break;
+		}
+
+		for (int i = 0; i < downCards.size(); i++) {
+			if (downCards.get(i).getNumber() == 1) {
+				downCards.add(new Card(14, downCards.get(i).getSuit()));
+				downCards.remove(i);
+			}
+		}
+
+		while (true) {
+			if (checkRoyalFlush(downCards)) {
+				ah = Combinations.RoyalFlush;
+				break;
+			}
+			if (checkStrightFlush(downCards)) {
+				ah = Combinations.StrightFlush;
+				break;
+			}
+			if (checkFourOfAKind(downCards)) {
+				ah = Combinations.FourOfAKind;
+				break;
+			}
+			if (checkFullHouse(downCards)) {
+				ah = Combinations.FullHouse;
+				break;
+			}
+			if (checkFlush(downCards)) {
+				ah = Combinations.Flush;
+				break;
+			}
+			if (checkStright(downCards)) {
+				ah = Combinations.Stright;
+				break;
+			}
+			if (checkThreeOfAKind(downCards)) {
+				ah = Combinations.ThreeOfAKind;
+				break;
+			}
+			if (checkTwoPair(downCards)) {
+				ah = Combinations.TwoPair;
+				break;
+			}
+			if (checkPair(downCards)) {
+				ah = Combinations.Pair;
+				break;
+			}
+			ah = Combinations.HighCard;
+			break;
+		}
+
+		System.out.println(downCards);
+
+		if (ah.getValue() < al.getValue())
+			return al;
+		else
+			return ah;
 	}
 
 	private static boolean checkRoyalFlush(ArrayList<Card> cards) {
-		return false;
+		int count[] = new int[15];
+
+		int spades = 0;
+		int clubs = 0;
+		int hearts = 0;
+		int diamonds = 0;
+
+		for (Card c : cards) {
+			switch (c.getSuit()) {
+			case Spades:
+				spades++;
+			case Clubs:
+				clubs++;
+			case Hearts:
+				hearts++;
+			case Diamonds:
+				diamonds++;
+			}
+		}
+
+		for (Card c : cards) {
+			count[c.getNumber()]++;
+		}
+
+		for (int i = 10; i < count.length; i++) {
+			if (count[i] < 1)
+				return false;
+		}
+		return true && (spades >= 5 || clubs >= 5 || hearts >= 5 || diamonds >= 5);
 	}
 
 	private static boolean checkStrightFlush(ArrayList<Card> cards) {
 
 		int cardCount = 0;
 		for (int i = 0; i < 2; i++) {
-			for (int j = 1; j < 5; j++) {
-				if ((cards.get((i + j) - 1).getSuit() == cards.get(i + j).getSuit())
-						&& (cards.get((i + j) - 1).getNumber() == cards.get(i + j).getNumber() - 1))
+			for (int j = 0; j < 5; j++) {
+				if ((cards.get(i + j).getSuit() == cards.get(i + j + 1).getSuit()) && (cards.get(i + j).getNumber() == cards.get(i + j + 1).getNumber() - 1))
 					cardCount++;
-				else
-					break;
 			}
 
 			if (cardCount == 4)
@@ -59,28 +158,51 @@ public class CheckForHand {
 	}
 
 	private static boolean checkFourOfAKind(ArrayList<Card> cards) {
-		// TODO Auto-generated method stub
+		int count[] = new int[15];
+
+		for (Card c : cards) {
+			count[c.getNumber()]++;
+			if (count[c.getNumber()] == 4)
+				return true;
+		}
 		return false;
 	}
 
 	private static boolean checkFullHouse(ArrayList<Card> cards) {
-		// TODO Auto-generated method stub
-		return false;
+		ArrayList<Card> cards2 = new ArrayList<Card>();
+		cards2.addAll(cards);
+		return checkThreeOfAKind(cards) && checkPair(removeThreeOfAKind(cards2));
 	}
 
 	private static boolean checkFlush(ArrayList<Card> cards) {
-		// TODO Auto-generated method stub
-		return false;
+
+		int spades = 0;
+		int clubs = 0;
+		int hearts = 0;
+		int diamonds = 0;
+
+		for (Card c : cards) {
+			switch (c.getSuit()) {
+			case Spades:
+				spades++;
+			case Clubs:
+				clubs++;
+			case Hearts:
+				hearts++;
+			case Diamonds:
+				diamonds++;
+			}
+		}
+
+		return (spades == 5 || clubs == 5 || hearts == 5 || diamonds == 5);
 	}
 
 	private static boolean checkStright(ArrayList<Card> cards) {
 		int cardCount = 0;
 		for (int i = 0; i < 2; i++) {
-			for (int j = 1; j < 5; j++) {
-				if (cards.get((i + j) - 1).getNumber() == cards.get(i + j).getNumber() - 1)
+			for (int j = 0; j < 5; j++) {
+				if (cards.get(i + j).getNumber() == cards.get(i + j + 1).getNumber() - 1)
 					cardCount++;
-				else
-					break;
 			}
 
 			if (cardCount == 4)
@@ -91,20 +213,15 @@ public class CheckForHand {
 	}
 
 	private static boolean checkThreeOfAKind(ArrayList<Card> cards) {
-		int cardCount = 0;
-		for (int i = 0; i < 6; i++) {
-			for (int j = 1; j < 4; j++) {
-				if (cards.get((i + j) - 1).getNumber() == cards.get(i + j).getNumber())
-					cardCount++;
-				else
-					break;
-			}
-			if (cardCount == 2)
-				return true;
-			cardCount = 0;
+		int count[] = new int[15];
 
+		for (Card c : cards) {
+			count[c.getNumber()]++;
+			if (count[c.getNumber()] == 3)
+				return true;
 		}
 		return false;
+
 	}
 
 	private static boolean checkTwoPair(ArrayList<Card> cards) {
@@ -114,22 +231,50 @@ public class CheckForHand {
 	}
 
 	private static boolean checkPair(ArrayList<Card> cards) {
-		for (int i = 0; i < cards.size(); i++) {
-			if (cards.get(i).getNumber() == cards.get(i + 1).getNumber())
+		int count[] = new int[15];
+
+		for (Card c : cards) {
+			count[c.getNumber()]++;
+			if (count[c.getNumber()] == 2)
 				return true;
 		}
 		return false;
 	}
 
 	private static ArrayList<Card> removePair(ArrayList<Card> cards) {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < cards.size() - 1; i++) {
 			if (cards.get(i).getNumber() == cards.get(i + 1).getNumber()) {
 				cards.remove(i);
 				cards.remove(i);
 				return cards;
 			}
 		}
-		//This should never happen as two cards should be removed
+		// This should never happen as two cards should be removed
 		return null;
 	}
+
+	private static ArrayList<Card> removeThreeOfAKind(ArrayList<Card> cards) {
+		int cardCount = 0;
+		int threeIndex = 0;
+
+		for (int i = 0; i < cards.size() - 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (cards.get(i + j).getNumber() == cards.get(i + j + 1).getNumber())
+					cardCount++;
+				threeIndex = (i + j) - 3;
+			}
+			if (cardCount == 2) {
+				cards.remove(threeIndex + 1);
+				cards.remove(threeIndex + 1);
+				cards.remove(threeIndex + 1);
+				return cards;
+			}
+			cardCount = 0;
+
+		}
+		// This should never happen as three cards should be removed
+		System.out.println("returning null for three cards removed");
+		return null;
+	}
+
 }
