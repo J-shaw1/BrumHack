@@ -37,6 +37,10 @@ public class Player implements PlayerInterface{
 			e.printStackTrace();
 		}
 	}
+	
+	public void destroyHand(){
+		hand = new Hand();
+	}
 
 	public Blind getBlind() {
 		return blind;

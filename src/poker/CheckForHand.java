@@ -150,6 +150,11 @@ public class CheckForHand {
 		return true && (spades >= 5 || clubs >= 5 || hearts >= 5 || diamonds >= 5);
 	}
 
+	/**
+	 * This is flawed, currently checks that five of a kind exist and that five in a row exist, not always the same cards
+	 * @param cards
+	 * @return
+	 */
 	private boolean checkStrightFlush(ArrayList<Card> cards) {
 
 		int count[] = new int[15];
@@ -194,21 +199,6 @@ public class CheckForHand {
 		}
 		return false;
 	}
-
-	//
-	// int cardCount = 0;
-	// for (int i = 0; i < 2; i++) {
-	// for (int j = 0; j < 5; j++) {
-	// if ((cards.get(i + j).getSuit() == cards.get(i + j + 1).getSuit()) &&
-	// (cards.get(i + j).getNumber() == cards.get(i + j + 1).getNumber() - 1))
-	// cardCount++;
-	// }
-	//
-	// if (cardCount == 4)
-	// return true;
-	// cardCount = 0;
-	// }
-	// return false;
 
 	private boolean checkFourOfAKind(ArrayList<Card> cards) {
 		int count[] = new int[15];
