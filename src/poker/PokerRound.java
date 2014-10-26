@@ -50,7 +50,7 @@ public class PokerRound {
 		System.out.println("The current bet is " + currentHighBet
 				+ ".\nBig blind is " + sizeOfBBlind + ".");
 
-		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 		bettingRoundNumber++;
 		// flop
@@ -60,7 +60,7 @@ public class PokerRound {
 			System.out.println(c);
 		}
 		// Betting 2
-		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 		bettingRoundNumber++;
 		// flop2
@@ -69,7 +69,7 @@ public class PokerRound {
 			System.out.println(c);
 		}
 		// Betting 3
-		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 		bettingRoundNumber++;
 		// Last flop
@@ -78,33 +78,24 @@ public class PokerRound {
 			System.out.println(c);
 		}
 		// Last bet
-		bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 
 		return players;
 	}// end of start()
 
-	private void bettingLol(int sizeOfBBlind, int currentHighBet,
+	private int bettingLol(int sizeOfBBlind, int currentHighBet,
 			int bettingRoundNumber) throws Exception {
 		int decision;
 		int startingPerson = roundNumber + 1; // -1 for place in array +2 for SB
 												// BB
 		int currentPerson = startingPerson;
 		int count = 0;
-		int decisionAmount = sizeOfBBlind;
-
 		do {
-
-			if (players.get(currentPerson).getBlind().equals(Blind.None)) {
-				decision = players.get(currentPerson).getDecision(
-						decisionAmount);
-			} else if (players.get(currentPerson).getBlind()
-					.equals(Blind.Small)) {
-				decision = players.get(currentPerson).getDecision(
-						currentHighBet);
+			if (bettingRoundNumber == 1){ 
+				decision = players.get(currentPerson).getDecision(2);
 			} else {
-				decision = players.get(currentPerson).getDecision(
-						currentHighBet);
+				decision = players.get(currentPerson).getDecision(currentHighBet);
 			}
 
 			if (decision < 0) {
@@ -138,6 +129,7 @@ public class PokerRound {
 				currentHighBet = decision;
 			}
 		} while (count != players.size());
+		return currentHighBet;
 	}
 
 	private ArrayList<Card> flop(ArrayList<Card> flop) {
