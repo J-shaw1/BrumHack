@@ -37,6 +37,10 @@ public class PokerGame {
 				//No player knocked out
 			}
 			players = players_hold;
+			
+			for(PlayerInterface p: players){
+				p.destroyHand();
+			}
 		} while (players.size() != 0);
 
 	}
