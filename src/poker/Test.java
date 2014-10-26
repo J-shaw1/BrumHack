@@ -7,6 +7,8 @@ public class Test {
 	public static void main(String[] args) {
 		ArrayList<Card> c = new ArrayList<Card>();
 		
+		//Test comment
+		
 		//c.add(new Card(12,Suit.Clubs));
 		//c.add(new Card(2,Suit.Clubs));
 		c.add(new Card(1,Suit.Clubs));
