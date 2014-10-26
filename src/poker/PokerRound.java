@@ -50,39 +50,57 @@ public class PokerRound {
 		System.out.println("The current bet is " + currentHighBet
 				+ ".\nBig blind is " + sizeOfBBlind + ".");
 
-		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet,
+				bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 		bettingRoundNumber++;
 		// flop
 		System.out.println("FLop:");
-		ArrayList<Card> flop = flop(new ArrayList<Card>());
+		ArrayList<Card> flop = flop(new ArrayList<Card>(),3);
 		for (Card c : flop) {
 			System.out.println(c);
 		}
 		// Betting 2
-		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet,
+				bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 		bettingRoundNumber++;
 		// flop2
-		flop = flop(flop);
+		flop = flop(flop,1);
 		for (Card c : flop) {
 			System.out.println(c);
 		}
 		// Betting 3
-		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet,
+				bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 		bettingRoundNumber++;
 		// Last flop
-		flop = flop(flop);
+		flop = flop(flop,1);
 		for (Card c : flop) {
 			System.out.println(c);
 		}
 		// Last bet
-		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet, bettingRoundNumber);
+		currentHighBet = bettingLol(sizeOfBBlind, currentHighBet,
+				bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 
+		ArrayList<Combinations> combslel = new ArrayList<Combinations>();
+		for (PlayerInterface p : players) {
+			combslel.add(checkWinner(p.getHand(), flop));
+		}
+		System.out.println(flop);
+		System.out.println(combslel);
+		
 		return players;
 	}// end of start()
+
+	private Combinations checkWinner(Hand hand, ArrayList<Card> flop) {
+
+			Combinations combs = CheckForHand.check(hand, flop);
+			return combs;
+
+	}
 
 	private int bettingLol(int sizeOfBBlind, int currentHighBet,
 			int bettingRoundNumber) throws Exception {
@@ -92,10 +110,11 @@ public class PokerRound {
 		int currentPerson = startingPerson;
 		int count = 0;
 		do {
-			if (bettingRoundNumber == 1){ 
+			if (bettingRoundNumber == 1) {
 				decision = players.get(currentPerson).getDecision(2);
 			} else {
-				decision = players.get(currentPerson).getDecision(currentHighBet);
+				decision = players.get(currentPerson).getDecision(
+						currentHighBet);
 			}
 
 			if (decision < 0) {
@@ -105,14 +124,14 @@ public class PokerRound {
 			} else if (decision > 0) {
 				if (decision == currentHighBet) {
 					// call
-					pot.bet(decision, bettingRoundNumber-1, currentPerson);
+					pot.bet(decision, bettingRoundNumber - 1, currentPerson);
 					players.get(currentPerson).decreaseChips(decision);
 					System.out.println("Player: "
 							+ players.get(currentPerson).getName()
 							+ " called with: " + decision);
 				} else {
 					// raise
-					pot.bet(decision, bettingRoundNumber-1, currentPerson);
+					pot.bet(decision, bettingRoundNumber - 1, currentPerson);
 					players.get(currentPerson).decreaseChips(decision);
 					System.out.println("Player: "
 							+ players.get(currentPerson).getName()
@@ -132,8 +151,11 @@ public class PokerRound {
 		return currentHighBet;
 	}
 
-	private ArrayList<Card> flop(ArrayList<Card> flop) {
-		flop.add(deck.getCard());
+	private ArrayList<Card> flop(ArrayList<Card> flop, int loop) {
+
+		for (int i = 0; i < loop; i++) {
+			flop.add(deck.getCard());
+		}
 		return flop;
 	}
 
