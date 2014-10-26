@@ -114,14 +114,14 @@ public class PokerRound {
 			} else if (decision > 0) {
 				if (decision == currentHighBet) {
 					// call
-					pot.bet(decision, bettingRoundNumber, currentPerson);
+					pot.bet(decision, bettingRoundNumber-1, currentPerson);
 					players.get(currentPerson).decreaseChips(decision);
 					System.out.println("Player: "
 							+ players.get(currentPerson).getName()
 							+ " called with: " + decision);
 				} else {
 					// raise
-					pot.bet(decision, bettingRoundNumber, currentPerson);
+					pot.bet(decision, bettingRoundNumber-1, currentPerson);
 					players.get(currentPerson).decreaseChips(decision);
 					System.out.println("Player: "
 							+ players.get(currentPerson).getName()
