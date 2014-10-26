@@ -85,22 +85,17 @@ public class PokerRound {
 				bettingRoundNumber);
 		System.out.println("Total in pot: " + pot.returnPotTotal());
 
-		ArrayList<Combinations> combslel = new ArrayList<Combinations>();
-		for (PlayerInterface p : players) {
-			combslel.add(checkWinner(p.getHand(), flop));
+		
+		
+		for (int i = 0; i < players.size(); i++) {
+			Combinations[] combslel = new Combinations[players.size()];
+			combslel[i] = CheckForHand.check(players.get(i).getHand(), flop);
+			System.out.println(combslel[i]);
 		}
-		System.out.println(flop);
-		System.out.println(combslel);
 		
 		return players;
 	}// end of start()
 
-	private Combinations checkWinner(Hand hand, ArrayList<Card> flop) {
-
-			Combinations combs = CheckForHand.check(hand, flop);
-			return combs;
-
-	}
 
 	private int bettingLol(int sizeOfBBlind, int currentHighBet,
 			int bettingRoundNumber) throws Exception {
